@@ -48,5 +48,5 @@ def process_json():
             mimetype="application/json"
         )
 
-# ✅ Dòng này là bắt buộc để Vercel nhận biết Flask app
-app = app
+if __name__ == '__main__':
+    app.run(debug=True)
