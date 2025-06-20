@@ -6,7 +6,6 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Giao diện HTML đơn giản hiển thị dữ liệu JSON
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html>
@@ -23,8 +22,8 @@ HTML_TEMPLATE = """
 </html>
 """
 
-@app.route('/process-json', methods=['POST'])
-def process_json():
+@app.route("/", methods=["POST"])  # 👈 Phải là "/" cho Vercel
+def main():
     data = request.get_json()
     url = data.get("url")
 
@@ -32,23 +31,19 @@ def process_json():
         return Response(
             json.dumps({"error": "Thiếu tham số 'url'"}, ensure_ascii=False),
             status=400,
-            mimetype='application/json'
+            mimetype="application/json"
         )
 
     try:
         response = requests.get(url)
-        response.raise_for_status()  # Nếu lỗi HTTP, raise exception
+        response.raise_for_status()
         json_data = response.json()
 
-        # Trả về HTML hiển thị dữ liệu
         return render_template_string(HTML_TEMPLATE, url=url, json_data=json_data)
 
     except Exception as e:
         return Response(
             json.dumps({"error": str(e)}, ensure_ascii=False),
             status=500,
-            mimetype='application/json'
+            mimetype="application/json"
         )
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
