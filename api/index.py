@@ -22,7 +22,7 @@ HTML_TEMPLATE = """
 </html>
 """
 
-@app.route("/api/index", methods=["POST"])
+@app.route("/", methods=["POST"])
 def process_json():
     data = request.get_json()
     url = data.get("url")
