@@ -22,8 +22,8 @@ HTML_TEMPLATE = """
 </html>
 """
 
-@app.route("/", methods=["POST"])  # 👈 Phải là "/" cho Vercel
-def main():
+@app.route("/api/index", methods=["POST"])
+def process_json():
     data = request.get_json()
     url = data.get("url")
 
@@ -47,3 +47,5 @@ def main():
             status=500,
             mimetype="application/json"
         )
+
+# ❌ Không dùng app.run() vì Vercel sẽ import Flask app
