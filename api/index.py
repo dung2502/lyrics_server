@@ -48,4 +48,5 @@ def process_json():
             mimetype="application/json"
         )
 
-# ❌ Không dùng app.run() vì Vercel sẽ import Flask app
+# ✅ Dòng này là bắt buộc để Vercel nhận biết Flask app
+app = app
